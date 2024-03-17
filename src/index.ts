@@ -11,7 +11,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<boolea
 
     const decodedToken = jwtDecode<any>(token)
     
-    
+    console.log("Teste")
     if (decodedToken && decodedToken.cpf) {
         return true;
       } else {
