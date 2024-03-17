@@ -5,8 +5,6 @@ import { jwtDecode } from 'jwt-decode';
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<boolean> => {
     const token = event.headers.Authorization;
 
-    console.log('teste')
-
     if (!token) {
         return false;
     }
