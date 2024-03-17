@@ -18,7 +18,7 @@ jobs:
       # Install Node.js dependencies
       - name: Install Node.js dependencies
         working-directory: src
-        run: npm ci
+        run: npm install
       # Build inside Docker containers
       - run: sam build --use-container
       # Prevent prompts and failure when the stack is unchanged
