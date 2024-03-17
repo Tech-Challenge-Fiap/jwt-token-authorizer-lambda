@@ -17,7 +17,8 @@ jobs:
           aws-region: us-east-2
       # Install Node.js dependencies
       - name: Install Node.js dependencies
-        run: npm install # or yarn install
+        working-directory: src
+        run: npm ci
       # Build inside Docker containers
       - run: sam build --use-container
       # Prevent prompts and failure when the stack is unchanged
