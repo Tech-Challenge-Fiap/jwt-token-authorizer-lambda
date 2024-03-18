@@ -1,20 +1,31 @@
 /* eslint-disable prettier/prettier */
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { jwtDecode } from 'jwt-decode';
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
 
-export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<boolean> => {
+dotenv.config();
+
+export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<any> => {
     const token = event.headers.Authorization;
-
+    const secretKey = process.env.JWT_SECRET_KEY + "";
+    
     if (!token) {
-        return false;
+      return {
+        isAuthorized: false,
+      };
     }
 
-    const decodedToken = jwtDecode<any>(token)
-    
-    console.log("Teste")
-    if (decodedToken && decodedToken.cpf) {
-        return true;
+    const verifyResponse = jwt.verify(token, `${secretKey}`, (error: any, decoded: any) => {
+      if (error) {
+        return {
+          isAuthorized: false,
+        };
       } else {
-        return false;
+        return {
+          isAuthorized: true
+        };
       }
+    });
+
+    return verifyResponse;
 };
